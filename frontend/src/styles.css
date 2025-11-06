@@ -1,0 +1,130 @@
+/* 🌈 ADAPTIVE PRODUCTIVITY ASSISTANT PREMIUM THEME */
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", system-ui, sans-serif;
+  transition: all 0.2s ease;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #f1f5f9;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  color: #f8fafc;
+}
+
+.container {
+  width: 90%;
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.btn {
+  background: linear-gradient(90deg, #e11d48, #ec4899);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f1f5f9;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+input, select {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  width: 100%;
+}
+
+input::placeholder {
+  color: #cbd5e1;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  border-left: 5px solid #ec4899;
+}
+
+.task.low { border-left-color: #10b981; }
+.task.medium { border-left-color: #f59e0b; }
+.task.high { border-left-color: #ef4444; }
+
+.mood-options {
+  display: flex;
+  gap: 10px;
+  font-size: 1.6rem;
+}
+
+.mood-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 0.2s;
+}
+
+.mood-btn.active {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.theme-toggle {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.quote {
+  font-style: italic;
+  color: #e2e8f0;
+  text-align: center;
+  font-size: 0.95rem;
+  margin-top: 10px;
+}
