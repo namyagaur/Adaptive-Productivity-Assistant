@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import API from "../api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Register() {
-  const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -14,54 +14,47 @@ export default function Register() {
     setMsg("");
     try {
       const res = await API.post("/api/auth/register", form);
-      setMsg(res.data.message || "✅ Registered successfully!");
+      setMsg(res.data.message);
       setTimeout(() => navigate("/login"), 1000);
     } catch (err) {
-      setMsg(err?.response?.data?.message || "❌ Registration failed");
+      setMsg(err.response?.data?.message || "❌ Registration failed");
     }
   };
 
   return (
-    <div className="container" style={{ maxWidth: "450px" }}>
-      <div className="card">
-        <h2>Register</h2>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>Create Account ✨</h2>
         <form onSubmit={onSubmit}>
           <input
+            type="text"
             name="name"
-            placeholder="Name"
+            placeholder="Full Name"
             value={form.name}
             onChange={onChange}
             required
           />
           <input
-            name="email"
             type="email"
+            name="email"
             placeholder="Email"
             value={form.email}
             onChange={onChange}
             required
           />
           <input
-            name="password"
             type="password"
+            name="password"
             placeholder="Password"
             value={form.password}
             onChange={onChange}
             required
           />
-          <button className="btn" type="submit">
-            Register
-          </button>
+          <button className="btn">Register</button>
         </form>
-        {msg && <p style={{ marginTop: "10px" }}>{msg}</p>}
-        <p style={{ marginTop: "15px" }}>
-          Already have an account?{" "}
-          <span
-            onClick={() => navigate("/login")}
-            style={{ color: "#e11d48", cursor: "pointer" }}
-          >
-            Login
-          </span>
+        {msg && <p>{msg}</p>}
+        <p>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
     </div>

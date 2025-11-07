@@ -45,13 +45,12 @@ export default function Dashboard() {
     fetchTasks();
   };
 
-  // 🧘 Mood tracker
   const handleMood = (m) => {
     setMood(m);
     localStorage.setItem("mood", m);
   };
 
-  // ⏱ Pomodoro Timer
+  // Pomodoro Timer
   useEffect(() => {
     let timer;
     if (running && timeLeft > 0) {
@@ -70,7 +69,7 @@ export default function Dashboard() {
     return `${m}:${s < 10 ? "0" + s : s}`;
   };
 
-  // 🌤 Tips & Quotes
+  // Tips & Quotes
   useEffect(() => {
     const tips = [
       "💡 Break big goals into smaller steps.",
@@ -90,149 +89,163 @@ export default function Dashboard() {
   const completedCount = tasks.filter((t) => t.completed).length;
 
   return (
-    <div className="container">
-      <h1>Adaptive Productivity Assistant ✨</h1>
-
-      {/* AI Tip */}
-      <div className="card" style={{ textAlign: "center" }}>
-        <h3>AI Focus Suggestion 🤖</h3>
-        <p>{tip}</p>
-      </div>
-
-      {/* Mood */}
-      <div className="card">
-        <h3>How are you feeling today?</h3>
-        <div className="mood-options">
-          {["🔥", "😌", "😴", "💭", "🧘"].map((m) => (
-            <button
-              key={m}
-              className={`mood-btn ${mood === m ? "active" : ""}`}
-              onClick={() => handleMood(m)}
-            >
-              {m}
-            </button>
-          ))}
-        </div>
-        {mood && <p>Current mood: {mood}</p>}
-      </div>
-
-      {/* Stats */}
-      <div className="card">
-        <h3>📊 Productivity Stats</h3>
-        <p>Total Tasks: {tasks.length}</p>
-        <p>Completed: {completedCount}</p>
-      </div>
-
-      {/* Timer */}
-      <div className="card">
-        <h3>Pomodoro Timer ⏱️</h3>
-        <p style={{ fontSize: "2rem" }}>{formatTime(timeLeft)}</p>
-        <button className="btn" onClick={() => setRunning(!running)}>
-          {running ? "Pause" : "Start"}
-        </button>
+    <div className="dashboard-container">
+      <header className="dashboard-header">
+        <h1>Adaptive Productivity Assistant ✨</h1>
         <button
-          className="btn-ghost"
-          onClick={() => {
-            setRunning(false);
-            setTimeLeft(25 * 60);
-          }}
+          className="theme-toggle"
+          onClick={() => document.body.classList.toggle("dark")}
         >
-          Reset
+          🌓
         </button>
-      </div>
+      </header>
 
-      {/* Add Task */}
-      <div className="card">
-        <h2>Add Task</h2>
-        <form onSubmit={addTask} className="row">
-          <input
-            placeholder="Task title"
-            value={form.title}
-            onChange={(e) => setForm({ ...form, title: e.target.value })}
-            required
-          />
-          <select
-            value={form.priority}
-            onChange={(e) => setForm({ ...form, priority: e.target.value })}
-          >
-            <option value="low">🟢 Low</option>
-            <option value="medium">🟡 Medium</option>
-            <option value="high">🔴 High</option>
-          </select>
-          <button className="btn">Add</button>
-        </form>
-      </div>
+      <div className="dashboard-grid">
+        {/* AI Tip */}
+        <div className="card focus-card">
+          <h3>AI Focus Suggestion 🤖</h3>
+          <p>{tip}</p>
+        </div>
 
-      {/* Active Tasks */}
-      <div className="card">
-        <h2>📝 Active Tasks</h2>
-        {tasks.filter((t) => !t.completed).length === 0 ? (
-          <p>No active tasks.</p>
-        ) : (
-          tasks
-            .filter((t) => !t.completed)
-            .map((t) => (
-              <div key={t._id} className={`task ${t.priority}`}>
-                <div>
-                  <strong>{t.title}</strong>
-                  <br />
-                  <small>{t.description}</small>
+        {/* Mood */}
+        <div className="card">
+          <h3>How are you feeling today?</h3>
+          <div className="mood-options">
+            {["🔥", "😌", "😴", "💭", "🧘"].map((m) => (
+              <button
+                key={m}
+                className={`mood-btn ${mood === m ? "active" : ""}`}
+                onClick={() => handleMood(m)}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
+          {mood && <p>Current mood: {mood}</p>}
+        </div>
+
+        {/* Stats */}
+        <div className="card">
+          <h3>📊 Productivity Stats</h3>
+          <p>Total Tasks: {tasks.length}</p>
+          <p>Completed: {completedCount}</p>
+        </div>
+
+        {/* Timer */}
+        {/* Timer */}
+<div className="card full-width timer-card">
+  <h3>Pomodoro Timer ⏱️</h3>
+  <p className="timer">{formatTime(timeLeft)}</p>
+  <div className="row timer-controls">
+    <button className="btn" onClick={() => setRunning(!running)}>
+      {running ? "Pause" : "Start"}
+    </button>
+    <button
+      className="btn-ghost"
+      onClick={() => {
+        setRunning(false);
+        setTimeLeft(25 * 60);
+      }}
+    >
+      Reset
+    </button>
+  </div>
+</div>
+
+
+        {/* Add Task */}
+        <div className="card full-width">
+          <h3>Add Task</h3>
+          <form onSubmit={addTask} className="row">
+            <input
+              placeholder="Task title"
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              required
+            />
+            <select
+              value={form.priority}
+              onChange={(e) => setForm({ ...form, priority: e.target.value })}
+            >
+              <option value="low">🟢 Low</option>
+              <option value="medium">🟡 Medium</option>
+              <option value="high">🔴 High</option>
+            </select>
+            <button className="btn">Add</button>
+          </form>
+        </div>
+
+        {/* Active Tasks */}
+        <div className="card full-width">
+          <h3>📝 Active Tasks</h3>
+          {tasks.filter((t) => !t.completed).length === 0 ? (
+            <p>No active tasks.</p>
+          ) : (
+            tasks
+              .filter((t) => !t.completed)
+              .map((t) => (
+                <div key={t._id} className={`task ${t.priority}`}>
+                  <div>
+                    <strong>{t.title}</strong>
+                    <br />
+                    <small>{t.description}</small>
+                  </div>
+                  <div className="row">
+                    <button
+                      className="btn"
+                      onClick={() => toggleComplete(t._id, t.completed)}
+                    >
+                      ✅ Done
+                    </button>
+                    <button
+                      className="btn-ghost"
+                      onClick={() => deleteTask(t._id)}
+                    >
+                      🗑 Delete
+                    </button>
+                  </div>
                 </div>
-                <div className="row">
-                  <button
-                    className="btn"
-                    onClick={() => toggleComplete(t._id, t.completed)}
-                  >
-                    ✅ Done
-                  </button>
+              ))
+          )}
+        </div>
+
+        {/* Completed Tasks */}
+        <div className="card full-width">
+          <h3>🎯 Completed Tasks</h3>
+          {completedCount === 0 ? (
+            <p>No completed tasks yet.</p>
+          ) : (
+            tasks
+              .filter((t) => t.completed)
+              .map((t) => (
+                <div
+                  key={t._id}
+                  className="task completed"
+                  style={{
+                    opacity: 0.7,
+                    textDecoration: "line-through",
+                    borderLeftColor: "#10b981",
+                  }}
+                >
+                  <div>
+                    <strong>{t.title}</strong>
+                  </div>
                   <button
                     className="btn-ghost"
-                    onClick={() => deleteTask(t._id)}
+                    onClick={() => toggleComplete(t._id, t.completed)}
                   >
-                    🗑 Delete
+                    🔁 Undo
                   </button>
                 </div>
-              </div>
-            ))
-        )}
-      </div>
+              ))
+          )}
+        </div>
 
-      {/* Completed Tasks */}
-      <div className="card">
-        <h2>🎯 Completed Tasks</h2>
-        {completedCount === 0 ? (
-          <p>No completed tasks yet.</p>
-        ) : (
-          tasks
-            .filter((t) => t.completed)
-            .map((t) => (
-              <div
-                key={t._id}
-                className="task completed"
-                style={{
-                  opacity: 0.7,
-                  textDecoration: "line-through",
-                  borderLeftColor: "#10b981",
-                }}
-              >
-                <div>
-                  <strong>{t.title}</strong>
-                </div>
-                <button
-                  className="btn-ghost"
-                  onClick={() => toggleComplete(t._id, t.completed)}
-                >
-                  🔁 Undo
-                </button>
-              </div>
-            ))
-        )}
-      </div>
-
-      {/* Quote */}
-      <div className="card">
-        <h3>🌤 Daily Motivation</h3>
-        <p>“{quote}”</p>
+        {/* Quote */}
+        <div className="card full-width">
+          <h3>🌤 Daily Motivation</h3>
+          <p className="quote">“{quote}”</p>
+        </div>
       </div>
     </div>
   );

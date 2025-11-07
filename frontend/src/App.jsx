@@ -7,6 +7,9 @@ import Register from "./pages/Register";
 function Navbar() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+   const toggleTheme = () => {
+    document.body.classList.toggle('light');
+  };
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -20,6 +23,7 @@ function Navbar() {
         Adaptive Productivity
       </Link>
       <div>
+        <button onClick={toggleTheme} className="theme-toggle">🌓</button>
         {!token ? (
           <>
             <Link to="/login" className="btn-ghost">
